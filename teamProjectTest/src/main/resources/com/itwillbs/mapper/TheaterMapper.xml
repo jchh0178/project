@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- src/main/resources/mapper폴더/MemberMapper.xml파일 
+https://mybatis.org/mybatis-3/getting-started.html
+-->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.itwillbs.mapper.TheaterMapper">
+	
+	<select id="list" resultType="com.itwillbs.domain.TheaterDTO">
+		select *
+		from theater
+	</select>
+	
+	<select id="detail" resultType="com.itwillbs.domain.TheaterDTO">
+		select theater_region, theater_name, theater_code
+		from theater
+  		where theater_region= #{theater_region} and theater_name = #{theater_name}
+	</select>
+	
+	<select id="detail2" resultType="com.itwillbs.domain.TheaterDTO">
+		select *
+		from theater
+		where theater_region = #{theater_region}	
+		group by theater_region
+	</select>
+  	
+  	
+  	<select id="list2" resultType="com.itwillbs.domain.TheaterDTO">
+		select theater_region
+		from theater
+		group by theater_region
+	</select>
+	
+  	<select id="list3" resultType="com.itwillbs.domain.TheaterDTO">
+		select *
+		from theater
+		where theater_region = #{theater_region}
+	</select>
+	
+	<select id="listTheater" resultType="com.itwillbs.domain.TheaterDTO">
+    	select * from theater
+	</select>
+	
+</mapper>
+
+
