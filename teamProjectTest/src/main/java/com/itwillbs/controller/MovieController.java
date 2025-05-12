@@ -112,10 +112,12 @@ public class MovieController {
     }
 
     
-    @GetMapping("/mbooking")
-    public String booking() {
-        return "movie/booking"; // → /WEB-INF/views/spring/qna/qna_main.jsp 로 연결됨!
-    }
+//    @GetMapping("/booking")
+//    public String booking(@RequestParam("movieId") int movieId, Model model) {
+//        MovieDTO movie = movieService.getMovieById(movieId);
+//        model.addAttribute("movie", movie);
+//        return "movie/booking"; // booking.jsp
+//    }
     
 	@GetMapping("/mreview")
     public String review() {

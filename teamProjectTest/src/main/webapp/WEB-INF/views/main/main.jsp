@@ -131,7 +131,7 @@
 			</c:choose>
 			</a>
 			</div>
-          <button class="reserve-btn" onclick="goBooking(1)">빠른 예매 버튼</button>
+          <button type="button" class="reserve-btn" onclick="goBooking('${movieDTO.movieId}')">빠른 예매</button>
       	</div>
       </c:forEach>
 	</div>
@@ -149,9 +149,10 @@
     function showDetail(movieId) {
       console.log('영화 상세 내용 보기 - 영화 ID:', movieId);
     }
-
+    
     function goBooking(movieId) {
-      alert('예매 페이지로 이동 (영화 ID: ' + movieId + ')');
+        const contextPath = "${pageContext.request.contextPath}";
+        location.href = contextPath + "/booth/booking?movieId=" + movieId;
     }
   </script>
 </body>
