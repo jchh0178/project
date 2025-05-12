@@ -102,6 +102,19 @@
   <%@ include file="../main/footer.jsp" %>
 
   <script>
+ 	 //URL 파라미터 읽는 함수
+	  function getParam(key) {
+		  const urlParams = new URLSearchParams(window.location.search);
+		  return urlParams.get(key);
+		}
+ 	 
+  	  //URL에서 받아온 값
+	  const preSelectedMovie = getParam('movie');
+	  const preSelectedRegion = getParam('region');
+	  const preSelectedTheater = getParam('theater');
+	  const preSelectedDate = getParam('date');
+	  const preSelectedTime = getParam('time');
+  
     const movieList = document.getElementById('movieList');
     const regionList = document.getElementById('regionList');
     const theaterList = document.getElementById('theaterList');
@@ -126,6 +139,12 @@
       highlightSelected(movieList, movie);
     }
 
+    //영화 자동 선택 (받아온값)
+    if (preSelectedMovie) {
+    	  selectedMovie = preSelectedMovie;
+    	  highlightSelected(movieList, preSelectedMovie);
+    	}
+    
     function selectRegion(region) {
       selectedRegion = region;
       highlightSelected(regionList, region);
@@ -133,6 +152,25 @@
       const filtered = theaters.filter(t => t.region === region);
       renderList(theaterList, filtered.map(t => t.name), idx => selectedTheater = filtered[idx].name);
     }
+    
+    // 지역, 극장 자동 선택
+    if (preSelectedRegion) {
+    	  selectedRegion = preSelectedRegion;
+    	  highlightSelected(regionList, preSelectedRegion);
+
+    	  const filtered = theaters.filter(t => t.region === preSelectedRegion);
+    	  renderList(theaterList, filtered.map(t => t.name), idx => selectedTheater = filtered[idx].name);
+
+    	  // 극장 자동 클릭 (딜레이 필요)
+    	  setTimeout(() => {
+    	    if (preSelectedTheater) {
+    	      const theaterItem = Array.from(theaterList.children).find(li => li.textContent === preSelectedTheater);
+    	      if (theaterItem) {
+    	        theaterItem.click();
+    	      }
+    	    }
+    	  }, 100);
+    	}
 
     function highlightSelected(container, value) {
       Array.from(container.children).forEach(el => {
@@ -170,6 +208,14 @@
       li.addEventListener('click', () => loadSchedules(dateStr));
       dateList.appendChild(li);
     }
+    
+    //날짜 자동 선택
+    if (preSelectedDate) {
+    	  const dateItem = Array.from(dateList.children).find(li => li.textContent === preSelectedDate);
+    	  if (dateItem) {
+    	    dateItem.click();
+    	  }
+    	}
 
     function loadSchedules(date) {
     	  selectedDate = date;
@@ -198,6 +244,10 @@
     	          seatBtn.disabled = false;
     	        });
     	        timeList.appendChild(li);
+    	        
+    	        if (preSelectedTime === formatted) {
+    	            li.click();
+    	          }
     	      });
     	    });
     	}
