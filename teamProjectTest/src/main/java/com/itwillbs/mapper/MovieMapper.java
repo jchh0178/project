@@ -16,4 +16,6 @@ public interface MovieMapper {
 	int countMovie();
 	MovieDTO getMovieDetail(String movieCd);
 	void insertMovie(MovieDTO dto);
+	
+	List<MovieDTO> getMovieList2();
 }

@@ -118,6 +118,12 @@ public class MovieService {
 //            movieMapper.insertMovie(movie);
 //        }
 //    }
+    public List<MovieDTO> getMovieList2(){
+    	System.out.println("MovieService getMovieList2()");
+
+        return movieMapper.getMovieList2();
+    }
+
 
     public List<MovieDTO> getMovieList(PageDTO pageDTO) {
     	System.out.println("MovieService getMovieList()");
