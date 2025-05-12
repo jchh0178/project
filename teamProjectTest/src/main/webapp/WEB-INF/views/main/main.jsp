@@ -150,11 +150,6 @@
       console.log('영화 상세 내용 보기 - 영화 ID:', movieId);
     }
 
-    function goDetail(movieCd) {
-      alert('영화 상세 페이지로 이동: ' + ${movieDTO.movieCd});
-      location.href = '${pageContext.request.contextPath}/movie/detail?movieCd=${movieDTO.movieCd}';
-    }
-
     function goBooking(movieId) {
       alert('예매 페이지로 이동 (영화 ID: ' + movieId + ')');
     }
