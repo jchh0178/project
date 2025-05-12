@@ -75,13 +75,15 @@ footer .foot_area .copy {
   text-align: center; /* 추가 */
 }
 </style>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/common.css" />
 </head>
 <body>
   <footer>
     <div class="foot_area box_inner">
       <ul class="foot_list">
         <li><a href="${pageContext.request.contextPath}/movie/main">영화</a></li>
-        <li><a href="${pageContext.request.contextPath}/movie/mbooking">예매</a></li>
+        <li><a href="${pageContext.request.contextPath}/booth/booking">예매</a></li>
         <li><a href="${pageContext.request.contextPath}/theater/thtmain">극장</a></li>
         <li><a href="${pageContext.request.contextPath}/login/login">로그인</a></li>
         <li><a href="${pageContext.request.contextPath}/login/register">회원가입</a></li>

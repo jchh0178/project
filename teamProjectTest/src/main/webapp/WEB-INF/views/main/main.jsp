@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -117,19 +117,21 @@
     <div class="poster-list">
       <c:forEach var="movieDTO" items="${movieList}">
       	<div>
-      		<div class="poster" onmouseover="showDetail(1)" onclick="goDetail(1)">
+      		<div class="poster" onmouseover="showDetail(1)">
+      		<a href="${pageContext.request.contextPath}/movie/detail?movieCd=${movieDTO.movieCd}">
 			<c:choose>
 			  <c:when test="${empty movieDTO.posterUrl}">
-			    <img src="<c:url value='/resources/images/no-image.png'/>" alt="기본 포스터" width="150"/>
+			      <img src="<c:url value='/resources/images/no-image.png'/>" alt="기본 포스터" width="150"/>
 			  </c:when>
 			  <c:otherwise>
-			    <img src="${movieDTO.posterUrl}"
-			         onerror="this.onerror=null; this.src='/resources/images/no-image.png';"
-			         alt="${movieDTO.movieNm} 포스터" width="150"/>
+			      <img src="${movieDTO.posterUrl}"
+			           onerror="this.onerror=null; this.src='/resources/images/no-image.png';"
+			           alt="${movieDTO.movieNm} 포스터" width="150"/>
 			  </c:otherwise>
 			</c:choose>
+			</a>
 			</div>
-          <button class="reserve-btn" onclick="goBooking(1)">빠른 예매 버튼</button>
+          <button type="button" class="reserve-btn" onclick="goBooking('${movieDTO.movieId}')">빠른 예매</button>
       	</div>
       </c:forEach>
 	</div>
@@ -147,13 +149,10 @@
     function showDetail(movieId) {
       console.log('영화 상세 내용 보기 - 영화 ID:', movieId);
     }
-
-    function goDetail(movieId) {
-      alert('영화 상세 페이지로 이동: ' + movieId);
-    }
-
+    
     function goBooking(movieId) {
-      alert('예매 페이지로 이동 (영화 ID: ' + movieId + ')');
+        const contextPath = "${pageContext.request.contextPath}";
+        location.href = contextPath + "/booth/booking?movieId=" + movieId;
     }
   </script>
 </body>

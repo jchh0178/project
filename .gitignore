@@ -13,6 +13,7 @@
 # 빌드 파일 & 결과물
 /bin/
 /target/
+teamProjectTest/target/
 
 # 로그
 *.log
@@ -50,3 +51,4 @@ src/main/resources/config/appdata.properties
 # ========================
 
 .gitignore
+/teamProjectTest/

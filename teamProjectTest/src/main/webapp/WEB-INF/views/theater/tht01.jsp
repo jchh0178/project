@@ -1,270 +1,321 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>극장 메인 페이지</title>
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #f0f2f5;
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    main {
-      width: 100%;
-      max-width: 1000px;
-      background-color: white;
-      padding: 30px 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      overflow-y: auto;
-      max-height: 90vh;
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 10px;
-    }
-
-    .region-tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-
-    .region-tabs button {
-      padding: 8px 16px;
-      background-color: #eee;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .region-tabs button.active {
-      background-color: #444;
-      color: white;
-    }
-
-    .region-theaters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-
-    .region-theaters ul {
-      list-style: none;
-      padding: 0;
-      min-width: 180px;
-    }
-
-    .region-theaters li {
-      padding: 5px 0;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .region-theaters li:hover {
-      background-color: #eee;
-    }
-
-    .favorite-theater {
-      margin-bottom: 40px;
-      background-color: #f0f0f0;
-      padding: 12px;
-      border-radius: 6px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .login-button {
-      padding: 6px 12px;
-      background-color: #4a90e2;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .notice-section {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    .notice-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .notice-table thead {
-      background-color: #ddd;
-    }
-
-    .notice-table th, .notice-table td {
-      text-align: left;
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-    }
-
-    .notice-table tr:hover {
-      background-color: #f5f5f5;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>극장 메인 페이지</title>
+    <link href="${pageContext.request.contextPath}/resources/css/layout.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/common.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/reset.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/module.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/module.css" rel="stylesheet">
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.0.js"></script>
 </head>
 <body>
-  <main>
-      <!-- Header -->
-    <%@ include file="../main/header.jsp" %>
-  
-    <section class="theater-section">
-      <h2>전체극장</h2>
-      <nav class="region-tabs">
-        <button class="active">서울</button>
-        <button>경기</button>
-        <button>인천</button>
-        <button>대전/충청/세종</button>
-        <button>부산/대구/경상</button>
-        <button>강원</button>
-        <button>제주</button>
-      </nav>
-      <div class="region-theaters">
-        <ul>
-          <li>강남</li>
-          <li>동대문</li>
-          <li>상봉프라임경기장</li>
-          <li>신촌</li>
-          <li>은평</li>
-          <li>화곡</li>
-        </ul>
-        <ul>
-          <li>강릉</li>
-          <li>마석</li>
-          <li>의정부</li>
-          <li>이수</li>
-        </ul>
-        <ul>
-          <li>군자</li>
-          <li>송도</li>
-          <li>센터돔</li>
-          <li>ARTNINE</li>
-        </ul>
-        <ul>
-          <li>더 부티크 용산타워</li>
-          <li>상봉</li>
-          <li>송파파크하비오</li>
-          <li>코엑스</li>
-        </ul>
-      </div>
-      <div class="favorite-theater">
-        <span>나의 선호극장 정보</span>
-        <button class="login-button">로그인하기</button>
-      </div>
-    </section>
+        <%@ include file="../main/header.jsp" %>
 
-    <section class="notice-section">
-      <h2>극장 공지사항</h2>
-      <table class="notice-table">
-        <thead>
-          <tr>
-            <th>극장</th>
-            <th>제목</th>
-            <th>지역</th>
-            <th>등록일</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>강릉(휴점)</td>
-            <td>[강릉점] 임시 휴관 안내 (2025년 04월 05일부터)</td>
-            <td>부산/대구/경상</td>
-            <td>2025.04.04</td>
-          </tr>
-          <tr>
-            <td>상봉프라임경기장</td>
-            <td>[상봉프라임경기장] 25년 3월 상봉프라임경기장 휴무 행사로 인한 주차 안내</td>
-            <td>서울</td>
-            <td>2025.03.29</td>
-          </tr>
-          <tr>
-            <td>코엑스</td>
-            <td>[코엑스] 시사회 진행에 따른 고객 안내</td>
-            <td>서울</td>
-            <td>2025.03.21</td>
-          </tr>
-          <tr>
-            <td>신촌</td>
-            <td>[신촌] 상영관 리뉴얼에 따른 안내</td>
-            <td>서울</td>
-            <td>2025.03.07</td>
-          </tr>
-          <tr>
-            <td>성수</td>
-            <td>[성수] 영화제 진행에 따른 고객 안내 (3/7 ~ 3/9)</td>
-            <td>서울</td>
-            <td>2025.03.04</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-   <!-- Footer -->
-   <%@ include file="../main/footer.jsp" %>
-  </main>
+    <main>
+    
+    <div id="container">
+    	<div id="contents">
+ <hr style="color:red">
+    
+        <div class="sect-common">
+    <div class="favorite-wrap">
+        <div class="sect-favorite">
+            <h4 style="z-index: 999; font-size: 24px; color: white; font-weight: 900; top: 20px;"><i id="fav_theater">자주가는 극장</i></h4>
+            <ul id="favoriteTheaters">
+	           	
+	           	
+					<li>
+						<a href="javascript:void(0)" data-th="">
+							<span>1</span>
+							<em>
+								
+							</em>
+						</a>
+					</li>
+				
+	           	
+					<li>
+						<a href="javascript:void(0)" data-th="">
+							<span>2</span>
+							<em>
+								
+							</em>
+						</a>
+					</li>
+				
+	           	
+					<li>
+						<a href="javascript:void(0)" data-th="">
+							<span>3</span>
+							<em>
+								
+							</em>
+						</a>
+					</li>
+				
+	           	
+					<li>
+						<a href="javascript:void(0)" data-th="">
+							<span>4</span>
+							<em>
+								
+							</em>
+						</a>
+					</li>
+				
+	           	
+					<li>
+						<a href="javascript:void(0)" data-th="">
+							<span>5</span>
+							<em>
+								
+							</em>
+						</a>
+					</li>
+				
+            </ul>
+            <button id="btn_set_my_favorite" type="button" title="새창">자주가는 극장 설정</button>
+        </div>
+        
+<script type="text/javascript">
+// let sessionId;
 
-  <script>
-    let isLoggedIn = false;
+// $(function() {
+// 	$('#favoriteTheaters a').on('click', function() {
+// 		$('.sect-city').find('li').removeClass('on');
+// 		document.getElementById('wrapEvent').scrollIntoView({ behavior: 'smooth' });
+//         var dataTh = $(this).data('th');
+//         $('.area-link').trigger('click', [dataTh, ]);
+//         $('#ulcontent>li').removeClass('on');
+// 	});
+// });
 
-    const theaterData = {
-      '서울': ['강남', '동대문', '상봉프라임경기장', '신촌', '은평', '화곡'],
-      '경기': ['수원', '고양', '용인', '의정부'],
-      '인천': ['부평', '송도', '계양'],
-      '대전/충청/세종': ['대전', '청주', '세종'],
-      '부산/대구/경상': ['부산', '대구', '울산'],
-      '강원': ['강릉', '원주'],
-      '제주': ['제주시', '서귀포시']
-    };
 
-    document.querySelectorAll('.region-tabs button').forEach(button => {
-      button.addEventListener('click', () => {
-        document.querySelectorAll('.region-tabs button').forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
 
-        const selectedRegion = button.textContent.trim();
-        const theaterList = theaterData[selectedRegion] || [];
+</script>
+        <div class="sect-city" style="display: flex; height: auto">
+	        <ul>
+			
+				<li class="">
+					<a href="javascript:void(0)" class="theater_region">서울</a>
+				</li>
+			
+				<li class="">
+					<a href="javascript:void(0)" class="theater_region">인천</a>
+				</li>
+			
+				<li class="">
+					<a href="javascript:void(0)" class="theater_region">경기</a>
+				</li>
+			
+				<li class="">
+					<a href="javascript:void(0)" class="theater_region">부산울산</a>
+				</li>
+			
+				<li class="">
+					<a href="javascript:void(0)" class="theater_region">대전충청</a>
+				</li>
+			
+				<li class="">
+					<a href="javascript:void(0)" class="theater_region">광주전라제주</a>
+				</li>
+			
+				<li class="">
+					<a href="javascript:void(0)" class="theater_region">경상</a>
+				</li>
+			
+				<li class="">
+					<a href="javascript:void(0)" class="theater_region">강원</a>
+				</li>
+			
+				<li class="">
+					<a href="javascript:void(0)" class="theater_region">대구</a>
+				</li>
+			
+			
+			<!-- 지역 눌렀을때 생성 되는 부분 -->
+	        </ul>
+	          <div class="area" style="position:absolute; top: 220px;">
+				<ul id="ulcontent">
+				
+	        	 </ul>
+	       	 </div>
+	      
+			           
+			
+        </div>
+       
+    </div>
+</div>
+<h3 id="wrapEvent"><img src="https://img.cgv.co.kr/R2014/images/title/h3_theater.gif" alt="THEATER"></h3>
+<div class="sect-theater ">
+        <h4 class="theater-tit" ><span style='margin:0 auto;' class="selectName"></span></h4>
+<!--         <a href="/support/lease/default.aspx" class="round inred btn_lease"><span style="padding:0 14px;">단체/대관문의</span></a> -->
+        
+        <div class="wrap-theaterinfo">
+            <div class="box-image">
+                <div id="theater_img_container" class="thumb-image">
+                	<ul class="movie">
+                	
+                	
+                	
+					</ul>	                
+                
+                
+                </div>	<!-- theater_img_container  -->
+            </div>
+            <div class="box-contents">
+                <div class="theater-info">
+                    <span class="txt-info">서울특별시 강남구 강남대로 438 (역삼동)</span>
+                    <!-- 최대 10개까지만 보여집니다 2 -->
+<!--                     <span class="screentype"> -->
+<!--                             <a href="/theaters/special/?regioncode=SCX&amp;theaterCode=0056" class="screenX">SCREENX</a> -->
+<!--                     </span> -->
+                </div>
+               
+            </div>
+        </div>
+    </div>    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	</div>	<!-- contents -->
+    
+    </div>		<!-- container -->
+    
+   
 
-        const regionContainer = document.querySelector('.region-theaters');
-        regionContainer.innerHTML = '';
+<script type="text/javascript">
 
-        const chunkSize = 4;
-        for (let i = 0; i < theaterList.length; i += chunkSize) {
-          const ul = document.createElement('ul');
-          const chunk = theaterList.slice(i, i + chunkSize);
-          chunk.forEach(theater => {
-            const li = document.createElement('li');
-            li.textContent = theater;
-            ul.appendChild(li);
-          });
-          regionContainer.appendChild(ul);
-        }
-      });
-    });
 
-    document.querySelector('.login-button').addEventListener('click', () => {
-      if (!isLoggedIn) {
-        location.href = '${pageContext.request.contextPath}/login/login';
-      } else {
-        alert('선호 극장 정보를 표시합니다.');
-      }
-    });
-  </script>
+
+let region;
+$(function() {
+	// 특정 지역 선택시 극장을 띄우기 위해 사용 
+	$('.theater_region').on('click', function() {
+		region = $(this).text();
+		$('.sect-city li').removeClass();
+		$(this).parent('li').addClass('on');
+		
+		$.ajax({
+			type : 'get',
+			url : "${pageContext.request.contextPath}/theater/ajaxList",
+			data : {'theater_region': region},
+			dataType: 'json',
+			success: function(areaList) {
+// 				console.log("areaList", areaList);
+
+				$('#ulcontent').html('');
+				
+				areaList.forEach(function(area) {
+// 					console.log("area", area);		//정상적으로 불러와지는지 확인
+					var text =
+						"<li class= >" 
+						+
+						"<a style='padding: 0 5px;' href='javascript:void(0);' class='theater_name' title='${area.theater_name}'>" 
+                        +
+                        area.theater_name 
+                        +
+                       "</a>" 
+                       +
+                   		"</li>";
+                   		
+					$('#ulcontent').append(text);
+
+				});
+				
+				
+			},
+			error: function() {
+				alert('오류');
+			}
+		});
+		
+		
+// 		$('.theater_region:contains("서울")').trigger('click');
+		
+		
+		
+		
+	});
+})
+
+
+
+</script>
+
+<script type="text/javascript">
+// var movieList = ${movieList};
+
+// $(function() {
+// 	$('.theater_name').on('click',  function() {
+	$(document).on('click', '.theater_name', function() {
+  		 var selectedName = $(this).text(); 	// 클릭된 텍스트
+  		 $('.selectName').text(selectedName); 	// span에 출력 (ID는 원하는 대로 설정)
+ 		 $('#ulcontent li').removeClass('on');	// 기존 선택된 극장 스타일 제거
+ 		 $(this).parent('li').addClass('on'); 	// 현재 클릭된 극장 스타일 추가
+		 
+ 		 
+ 		 	$.ajax({
+ 		 		type : 'get',
+				url:"${pageContext.request.contextPath}/theater/movieList",
+				dataType:'json',
+				success:function(movieList){
+					alert(movieList);
+					$('.movie').html('');
+					
+					
+					
+					movieList.forEach(function(area){
+						var text = 
+							"<li>"
+							+
+							area.movieNm
+							+
+							"</li>";
+							
+						$('.movie').append(text);
+						
+						
+					});
+					
+				},
+ 		 	
+				error: function() {
+					alert('오류');
+				}
+ 		 	
+ 		 	});
+ 		 	
+ 		 	
+ 		 	
+ 		 
+	
+	});	//click 이벤트
+  	
+// })
+
+
+
+
+
+</script>
+
+
+ 
+    
+        <%@ include file="../main/footer.jsp" %>
+
+    </main>
+   
 </body>
 </html>
