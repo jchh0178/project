@@ -6,136 +6,144 @@
   <meta charset="UTF-8">
   <title>메인 페이지</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #f4f4f4;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 20px;
-    }
-
-    header {
+    .movie-container {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #fff;
-      padding: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .nav-left, .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .nav-button, .main-logo, .login-btn {
-      padding: 8px 16px;
-      border: 1px solid #ccc;
-      background-color: #fff;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .nav-button:hover, .main-logo:hover, .login-btn:hover {
-      background-color: #eee;
-    }
-
-    .poster-section {
-      background: white;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
       padding: 30px;
-      margin-top: 20px;
-      border-radius: 8px;
+    }
+
+    .movie-box {
+      width: 200px;
+      position: relative;
       text-align: center;
     }
 
-    .poster-list {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
+    .poster-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: pointer;
     }
 
-    .poster {
-      width: 180px;
-      background-color: #ccc;
-      height: 270px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-      border-radius: 8px;
+    .poster-img {
+	  width: 100%;
+	  height: 300px;            /* ✅ 고정 높이 */
+	  object-fit: cover;        /* ✅ 이미지 비율 유지하며 자르기 */
+	  transition: opacity 0.4s ease;
+	  display: block;
+	}
+
+    .movie-info {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      color: white;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      padding: 10px;
+      box-sizing: border-box;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    .poster-wrapper:hover .poster-img {
+      opacity: 0.3;
+    }
+
+    .poster-wrapper:hover .movie-info {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .reserve-btn {
       margin-top: 10px;
-      padding: 8px 12px;
-      background-color: #007bff;
+      padding: 5px 10px;
+      background-color: crimson;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
 
-    .reserve-btn:hover {
-      background-color: #0056b3;
+    .pagination {
+      text-align: center;
+      margin: 30px 0;
     }
 
-  
+    .pagination a {
+      margin: 0 5px;
+      text-decoration: none;
+      color: black;
+    }
+
+    .pagination a.active {
+      font-weight: bold;
+      color: red;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <!-- Header -->
     <%@ include file="../main/header.jsp" %>
-    
-<!--     <header> -->
-<!--       <div class="nav-left"> -->
-<!--         <button class="nav-button">☰</button> -->
-<!--         <button class="nav-button" onclick="goPage('movie')">영화</button> -->
-<!--         <button class="nav-button" onclick="goPage('theater')">극장</button> -->
-<!--         <button class="nav-button" onclick="goPage('booking')">예매</button> -->
-<!--       </div> -->
-<!--       <div> -->
-<!--         <button class="main-logo" onclick="goPage('home')">메인 로고</button> -->
-<!--       </div> -->
-<!--       <div class="nav-right"> -->
-<!--         <button class="nav-button" onclick="goPage('mypage')">마이 페이지</button> -->
-<!--         <button class="login-btn" onclick="goPage('login')">로그인</button> -->
-<!--         <button class="login-btn" onclick="goPage('signup')">회원가입</button> -->
-<!--         <button class="nav-button" onclick="goPage('cs')">고객센터</button> -->
-<!--       </div> -->
-<!--     </header> -->
 
-    <!-- Box Office -->
-    <section class="poster-section">
-    <h2>박스 오피스</h2>
-    <div class="poster-list">
-      <c:forEach var="movieDTO" items="${movieList}">
-      	<div>
-      		<div class="poster" onmouseover="showDetail(1)">
-      		<a href="${pageContext.request.contextPath}/movie/detail?movieCd=${movieDTO.movieCd}">
-			<c:choose>
-			  <c:when test="${empty movieDTO.posterUrl}">
-			      <img src="<c:url value='/resources/images/no-image.png'/>" alt="기본 포스터" width="150"/>
-			  </c:when>
-			  <c:otherwise>
-			      <img src="${movieDTO.posterUrl}"
-			           onerror="this.onerror=null; this.src='/resources/images/no-image.png';"
-			           alt="${movieDTO.movieNm} 포스터" width="150"/>
-			  </c:otherwise>
-			</c:choose>
-			</a>
-			</div>
-          <button type="button" class="reserve-btn" onclick="goBooking('${movieDTO.movieId}')">빠른 예매</button>
-      	</div>
-      </c:forEach>
+    <!-- 영화 목록 -->
+    <h2 style="text-align:center;">🎬 현재 상영작</h2>
+
+	<div class="movie-container">
+	  <c:forEach var="movie" items="${movieList}">
+	    <div class="movie-box">
+	      <div class="poster-wrapper">
+	        <img class="poster-img" src="${movie.posterUrl}"
+				 onerror="this.onerror=null; this.src='${pageContext.request.contextPath}/resources/upload/no-image.png';"
+				 alt="${movie.movieNm} 포스터" />
+	        <div class="movie-info">
+	          <h4>${movie.movieNm}</h4>
+	          <p>감독: ${movie.directors}</p>
+	          <p>배우: ${movie.actors}</p>
+	          <p>장르: ${movie.genreNm}</p>
+	          <p>개봉: ${movie.openDt}</p>
+	          <form method="get" action="${pageContext.request.contextPath}/booth/booking">
+	            <input type="hidden" name="movieId" value="${movie.movieId}" />
+	            <button type="submit" class="reserve-btn">예매</button>
+	          </form>
+	        </div>
+	      </div>
+	    </div>
+	  </c:forEach>
 	</div>
-    </section>
+    
+    <!-- pagination -->
+		<div class="pagination">
+			<a href="${pageContext.request.contextPath}/main/main?pageNum=1&search=${pageDTO.search}" class="firstpage  pbtn"><img src="${pageContext.request.contextPath}/resources/upload/btn_firstpage.png" alt="첫 페이지로 이동"></a>
+				
+			<c:if test="${pageDTO.currentPage > 1}">
+				<a href="${pageContext.request.contextPath}/main/main?pageNum=${pageDTO.currentPage - 1}" class="prevpage  pbtn"><img src="${pageContext.request.contextPath}/resources/upload/btn_prevpage.png" alt="이전 페이지로 이동"></a>
+			</c:if>
+				
+				
+			<c:forEach var="i" begin="${pageDTO.startPage}" end="${pageDTO.endPage}" step="1">
+				<c:if test="${ i eq pageDTO.currentPage }">
+					<a href="${pageContext.request.contextPath}/main/main?pageNum=${i }"><span class="pagenum currentpage">${i }</span></a>
+				</c:if>
+				<c:if test="${ i ne pageDTO.currentPage }">
+					<a href="${pageContext.request.contextPath}/main/main?pageNum=${i }"><span class="pagenum">${i }</span></a>
+				</c:if>
+			</c:forEach>
+				
+			<c:if test="${pageDTO.currentPage < pageDTO.pageCount}">
+				<a href="${pageContext.request.contextPath}/main/main?pageNum=${pageDTO.currentPage + 1}" class="nextpage  pbtn"><img src="${pageContext.request.contextPath}/resources/upload/btn_nextpage.png" alt="다음 페이지로 이동"></a>
+			</c:if>
+				
+				
+			<a href="${pageContext.request.contextPath}/main/main?pageNum=${pageDTO.pageCount}" class="lastpage  pbtn"><img src="${pageContext.request.contextPath}/resources/upload/btn_lastpage.png" alt="마지막 페이지로 이동"></a>
+		</div>
+	<!-- //pagination -->
 
     <!-- Footer -->
    <%@ include file="../main/footer.jsp" %>

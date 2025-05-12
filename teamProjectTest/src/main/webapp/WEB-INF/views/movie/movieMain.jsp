@@ -69,12 +69,12 @@
 				<a href="${pageContext.request.contextPath}/movie/detail?movieCd=${movieDTO.movieCd}">
 					<c:choose>
 						<c:when test="${empty movieDTO.posterUrl}">
-							<img src="<c:url value='/resources/images/no-image.png'/>"
+							<img src="<c:url value='/resources/upload/no-image.png'/>"
 								alt="기본 포스터" />
 						</c:when>
 						<c:otherwise>
 							<img src="${movieDTO.posterUrl}"
-								onerror="this.onerror=null; this.src='/resources/images/no-image.png';"
+								onerror="this.onerror=null; this.src='/resources/upload/no-image.png';"
 								alt="${movieDTO.movieNm} 포스터" />
 						</c:otherwise>
 					</c:choose>
@@ -84,9 +84,6 @@
 					<p>개봉일: ${movieDTO.openDt}</p>
 					<p>관람등급: ${movieDTO.watchGradeNm }</p>
 				</div>
-
-				<!--                 차트 영역 -->
-				<%--                 <canvas id="chart-${i.index}" class="review-chart"></canvas> --%>
 
 				<!-- 영화 카드 샘플 1 -리뷰작성란 -->
 				<div class="movie-info">
@@ -112,7 +109,9 @@
 				</div>
 				
 				<!-- 예매 버튼 -->
-				<%--                 <button class="reserve-button" onclick="location.href='/reserve?movieCd=${movie.movieCd}'">예매</button> --%>
+				<a href="${pageContext.request.contextPath}/booth/booking?movieCd=${movie.movieCd}">
+					<button type="button" class="reserve-button">예매</button>
+				</a>
 			</div>
 		</c:forEach>
 	</div>
@@ -122,14 +121,14 @@
 		<a
 			href="${pageContext.request.contextPath}/movie/main?pageNum=1&search=${pageDTO.search}"
 			class="firstpage  pbtn"><img
-			src="${pageContext.request.contextPath}/resources/images/btn_firstpage.png"
+			src="${pageContext.request.contextPath}/resources/upload/btn_firstpage.png"
 			alt="첫 페이지로 이동"></a>
 
 		<c:if test="${pageDTO.currentPage > 1}">
 			<a
 				href="${pageContext.request.contextPath}/movie/main?pageNum=${pageDTO.currentPage - 1}"
 				class="prevpage  pbtn"><img
-				src="${pageContext.request.contextPath}/resources/images/btn_prevpage.png"
+				src="${pageContext.request.contextPath}/resources/upload/btn_prevpage.png"
 				alt="이전 페이지로 이동"></a>
 		</c:if>
 
@@ -152,7 +151,7 @@
 			<a
 				href="${pageContext.request.contextPath}/movie/main?pageNum=${pageDTO.currentPage + 1}"
 				class="nextpage  pbtn"><img
-				src="${pageContext.request.contextPath}/resources/images/btn_nextpage.png"
+				src="${pageContext.request.contextPath}/resources/upload/btn_nextpage.png"
 				alt="다음 페이지로 이동"></a>
 		</c:if>
 
@@ -160,7 +159,7 @@
 		<a
 			href="${pageContext.request.contextPath}/movie/main?pageNum=${pageDTO.pageCount}"
 			class="lastpage  pbtn"><img
-			src="${pageContext.request.contextPath}/resources/images/btn_lastpage.png"
+			src="${pageContext.request.contextPath}/resources/upload/btn_lastpage.png"
 			alt="마지막 페이지로 이동"></a>
 	</div>
 	<!-- //pagination -->
