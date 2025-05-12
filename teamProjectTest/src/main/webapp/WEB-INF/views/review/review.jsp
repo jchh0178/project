@@ -7,7 +7,7 @@
 <meta charset="UTF-8" />
 <title>영화 리뷰</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/review.css" />
+	href="${pageContext.request.contextPath}/resources/css/common.css" />
 </head>
 <body class="container">
   <!-- Header -->
@@ -109,8 +109,6 @@
               	  	  			  '<button type="button" onclick="editReview(' + review.reviewId + ')">수정</button>'+
               	      			  '<button type="button" onclick="deleteReview(' + review.reviewId + ')">삭제</button>' +
               	      			  '</div>'  ;
-            	  }else{
-            		  html;
             	  }
             div.innerHTML = html;
             reviewList.appendChild(div);

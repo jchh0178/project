@@ -18,5 +18,5 @@ public class ReviewDTO {
     private boolean reviewSelect;
     private Timestamp reviewDate;
     private int reviewLike;
-	private String Sentiment;
+   private String Sentiment;
 }

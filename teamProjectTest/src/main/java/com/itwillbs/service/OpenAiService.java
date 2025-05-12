@@ -10,13 +10,12 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class OpenAiService {
 
-	@Value("${openAI.KEY}")
-    private String openAIKey;
-	
+    @Value("${openAI.KEY}")
+    private String apiKey;
+
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
 
     public String analyzeSentiment(String reviewContent) throws Exception {
@@ -26,8 +25,7 @@ public class OpenAiService {
             "{\n" +
             "  \"model\": \"gpt-3.5-turbo\",\n" +
             "  \"messages\": [\n" +
-            "    { \"role\": \"system\", \"content\": \"너는 리뷰 감정 분석기야. 사용자 입력이 긍정이면 'positive', 부정이면 'negative'만 출력해." +
-            " },\n" +
+            "    { \"role\": \"system\", \"content\": \"너는 리뷰 감정 분석기야. 사용자 입력이 긍정이면 'positive', 부정이면 'negative'만 출력해.\" },\n" +
             "    { \"role\": \"user\", \"content\": \"%s\" }\n" +
             "  ]\n" +
             "}", prompt);
@@ -35,7 +33,7 @@ public class OpenAiService {
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(API_URL))
             .header("Content-Type", "application/json")
-            .header("Authorization", "Bearer " + openAIKey)
+            .header("Authorization", "Bearer " + apiKey)
             .POST(HttpRequest.BodyPublishers.ofString(requestBody))
             .build();
 

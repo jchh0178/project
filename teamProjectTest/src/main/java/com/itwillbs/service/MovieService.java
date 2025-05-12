@@ -30,9 +30,6 @@ public class MovieService {
 
     
     public MovieDTO getMovieById(int movieId) {
-       
-    	
-    	
     	return movieMapper.getMovieById(movieId);
     }
     
@@ -203,6 +200,7 @@ public class MovieService {
 
 	public MovieDTO getMovieDetail(String movieCd) {
 		System.out.println("MovieService getMovieDetail()");
+		System.out.println(movieCd);
 		
 		return movieMapper.getMovieDetail(movieCd);
 	}

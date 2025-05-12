@@ -127,4 +127,27 @@ public class MovieController {
     public String seat() {
         return "movie/seat"; // → /WEB-INF/views/spring/qna/qna_main.jsp 로 연결됨!
     }
+	
+//	@GetMapping("/movie/chart/{movieId}")
+//	@ResponseBody
+//	public String generateChart(@PathVariable("movieId") int movieId) {
+//	    try {
+//	        ProcessBuilder pb = new ProcessBuilder("python", "C:\\Users\\admin\\git\\test1\\teamProjectTest\\src\\main\\webapp\\resources\\py_chart\\chart.py", String.valueOf(movieId));
+//	        pb.redirectErrorStream(true);
+//	        Process process = pb.start();
+//
+//	        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+//	        String line;
+//	        while ((line = reader.readLine()) != null) {
+//	            System.out.println("[PYTHON] " + line);
+//	        }
+//
+//	        process.waitFor();
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	        return "error";
+//	    }
+//
+//	    return "ok";
+//	}
 }
