@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.itwillbs.domain.ScreenDTO;
 import com.itwillbs.domain.TheaterDTO;
 
 @Mapper
@@ -21,7 +22,10 @@ public interface TheaterMapper {
 
 
     // 전체 극장 목록 가져오기
-    public List<TheaterDTO> listTheater();	
+    public List<TheaterDTO> listTheater();
+
+    // 상영 정보 목록 가져오기
+	public List<ScreenDTO> listScreen(String theater_name);	
 
 
 

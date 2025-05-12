@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.itwillbs.domain.ScreenDTO;
 import com.itwillbs.domain.TheaterDTO;
 import com.itwillbs.mapper.TheaterMapper;
 
@@ -51,6 +52,13 @@ public class TheaterService {
 		
 		
 		return theaterMapper.list3(region);
+	}
+
+
+	// 상영 정보 가져오기
+	public List<ScreenDTO> listScreen(String theater_name) {
+		
+		return theaterMapper.listScreen(theater_name);
 	}
 
 

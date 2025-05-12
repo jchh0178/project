@@ -19,6 +19,7 @@ https://mybatis.org/mybatis-3/getting-started.html
     	join movie m on s.movie_id = m.movie_id
     	join theater t on s.theater_id = t.theater_id
     	join rooms r on s.room_id = r.room_id
+    	order by s.screen_date desc
 	</select>
 	
 	<resultMap id="ScreenJoinResultMap" type="com.itwillbs.domain.ScreenDTO">

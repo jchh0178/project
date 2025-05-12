@@ -24,6 +24,8 @@ public class ScreenDTO {
     private String movie_nm;
     private String theater_name;
     private String room_name;
+    private String poster_url;
+   
 	
 	
 }

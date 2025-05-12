@@ -258,43 +258,115 @@ $(function() {
 
 // $(function() {
 // 	$('.theater_name').on('click',  function() {
+	//극장 이름 선택하면 상영 스케줄 출력
 	$(document).on('click', '.theater_name', function() {
   		 var selectedName = $(this).text(); 	// 클릭된 텍스트
-  		 $('.selectName').text(selectedName); 	// span에 출력 (ID는 원하는 대로 설정)
+  		 $('.selectName').text(selectedName); 	// span에 출력 
  		 $('#ulcontent li').removeClass('on');	// 기존 선택된 극장 스타일 제거
  		 $(this).parent('li').addClass('on'); 	// 현재 클릭된 극장 스타일 추가
 		 
  		 
- 		 	$.ajax({
- 		 		type : 'get',
-				url:"${pageContext.request.contextPath}/theater/movieList",
-				dataType:'json',
-				success:function(movieList){
-					alert(movieList);
-					$('.movie').html('');
-					
-					
-					
-					movieList.forEach(function(area){
-						var text = 
-							"<li>"
-							+
-							area.movieNm
-							+
-							"</li>";
-							
-						$('.movie').append(text);
-						
-						
-					});
-					
-				},
- 		 	
-				error: function() {
-					alert('오류');
-				}
- 		 	
- 		 	});
+ 		$.ajax({
+ 		    type: 'get',
+ 		    url: "${pageContext.request.contextPath}/theater/listScreen",
+ 		    data: { 'theater_name': selectedName },
+ 		    dataType: 'json',
+ 		   success: function(listScreen) {
+ 			    console.log(listScreen);
+ 			    $('.movie').html(''); //movie 안에 listScreen 출력
+	
+ 			    //listScreen값이 있으면 정보 가져옴
+ 			    if (listScreen.length > 0) {
+ 			        //영화 이름으로 상영 스케줄 그룹화
+ 			    	const grouped = {};
+ 			        listScreen.forEach(item => {
+ 			            console.log("screen_date 원본 값:", item.screen_date);
+ 			            if (!grouped[item.movie_nm]) {
+ 			                grouped[item.movie_nm] = {
+ 			                    poster_url: item.poster_url,
+ 			                    schedules: []
+ 			                };
+ 			            }
+ 			            grouped[item.movie_nm].schedules.push(item);
+ 			        });
+
+ 			        //오늘 날짜와 상영 날짜 비교하여 오늘 날짜의 스케줄 출력
+ 			        const today = new Date();
+ 			        today.setHours(0, 0, 0, 0);
+ 			        const todayTimestamp = today.getTime();
+
+ 			        let hasSchedule = false;
+
+ 			        for (let movieName in grouped) {
+ 			            const todaySchedules = grouped[movieName].schedules.filter(sch => {
+ 			                const schDate = new Date(sch.screen_date);
+ 			                schDate.setHours(0, 0, 0, 0);
+ 			                return schDate.getTime() === todayTimestamp;
+ 			            });
+
+ 			            //오늘 스케줄 있으면 영화 정보, 날짜, 상영관 출력
+ 			            if (todaySchedules.length > 0) {
+ 			                hasSchedule = true;
+ 			                let movieBlock = "<li style='margin-bottom:30px; list-style:none; border:1px solid #ddd; padding:15px; border-radius:8px;'>";
+ 			                movieBlock += "<div style='display:flex; align-items:center; margin-bottom:10px;'>";
+ 			                movieBlock += "<img src='" + grouped[movieName].poster_url + "' style='width:120px; height:auto; margin-right:20px;'>";
+ 			                movieBlock += "<h2 style='margin:0; text-decoration: none;'>" + movieName + "</h2>";
+ 			                movieBlock += "</div>";
+ 			                movieBlock += "<table style='width:100%; border-collapse:collapse;'>";
+ 			                movieBlock += "<tr style='background:#f5f5f5;'><th style='padding:8px; border:1px solid #ddd;'>날짜</th><th style='padding:8px; border:1px solid #ddd;'>시작 ~ 종료</th><th style='padding:8px; border:1px solid #ddd;'>상영관</th></tr>";
+
+//  			                todaySchedules.forEach(sch => {
+//  			                    const dateObj = new Date(sch.screen_date);
+//  			                    const formattedDate = dateObj.toLocaleDateString('ko-KR');
+//  			                    const startTime = new Date(sch.screen_start_time).toTimeString().substring(0, 5);
+//  			                    const endTime = new Date(sch.screen_end_time).toTimeString().substring(0, 5);
+
+//  			                    movieBlock += "<tr>";
+//  			                    movieBlock += "<td style='padding:8px; border:1px solid #ddd;'>" + formattedDate + "</td>";
+//  			                    movieBlock += "<td style='padding:8px; border:1px solid #ddd;'>" + startTime + " ~ " + endTime + "</td>";
+//  			                    movieBlock += "<td style='padding:8px; border:1px solid #ddd;'>" + sch.room_name + "</td>";
+//  			                    movieBlock += "</tr>";
+//  			                });
+
+//  			                movieBlock += "</table></li>";
+//  			                $('.movie').append(movieBlock);
+								// 상영관별 그룹화
+								const schedulesByRoom = {};
+								todaySchedules.forEach(sch => {
+								    if (!schedulesByRoom[sch.room_name]) {
+								        schedulesByRoom[sch.room_name] = [];
+								    }
+								    schedulesByRoom[sch.room_name].push(sch);
+								});
+								
+								// 상영관별 출력
+								for (let roomName in schedulesByRoom) {
+								    movieBlock += "<h3 style='margin-top:15px;'>" + roomName + "</h3><div style='margin-bottom:10px;'>";
+								
+								    schedulesByRoom[roomName].forEach(sch => {
+								        const startTime = new Date(sch.screen_start_time).toTimeString().substring(0, 5);
+								        const endTime = new Date(sch.screen_end_time).toTimeString().substring(0, 5);
+								        movieBlock += "<span style='display:inline-block; margin-right:10px; padding:5px 10px; border:1px solid #ccc; border-radius:5px;'>" 
+								                    + startTime + " ~ " + endTime + "</span>";
+								    });
+								
+								    movieBlock += "</div>";
+								}
+
+								movieBlock += "</li>";  // 기존 table 대신 닫기
+								$('.movie').append(movieBlock);  // 그대로 유지
+								 			            }
+								 			        }
+
+				//오늘 스케줄 없으면 상영 스케줄이 없습니다 내용 출력
+ 			    } else {
+ 			        $('.movie').append("<li>상영 스케줄이 없습니다.</li>");
+ 			    }
+ 			},
+ 			error: function() {
+ 			    alert('오류');
+ 			}
+        }); 
  		 	
  		 	
  		 	
