@@ -31,9 +31,9 @@ public class BoothService {
         return boothDTO.getBooth_id(); // 자동 증가된 booth_id 반환
     }
 
-	public List<ScreenDTO> listScreen(String screen_date) {
+	public List<ScreenDTO> listScreen(String screen_date, String movie, String theater) {
 		
-		return boothMapper.listScreen(screen_date);
+		return boothMapper.listScreen(screen_date, movie, theater);
 	}
 
 	public BoothDTO getBoothInfo(int booth_id) {

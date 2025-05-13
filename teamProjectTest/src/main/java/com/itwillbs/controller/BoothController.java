@@ -53,9 +53,9 @@ public class BoothController {
 	
 	@GetMapping("/schedules")
 	@ResponseBody
-	public List<ScreenDTO> listScreen(@RequestParam String screen_date) {
+	public List<ScreenDTO> listScreen(@RequestParam String screen_date,  @RequestParam String movie, @RequestParam String theater) {
 		
-	    return boothService.listScreen(screen_date);  // screen_date 기준 조회
+	    return boothService.listScreen(screen_date, movie, theater);  // screen_date 기준 조회
 	}
     
 	@PostMapping("/confirm")

@@ -103,9 +103,9 @@
 
   <script>
  	 //URL 파라미터 읽는 함수
-	  function getParam(key) {
-		  const urlParams = new URLSearchParams(window.location.search);
-		  return urlParams.get(key);
+	 function getParam(key) {
+	  const urlParams = new URLSearchParams(window.location.search);
+	  return urlParams.get(key);
 		}
  	 
   	  //URL에서 받아온 값
@@ -218,10 +218,15 @@
     	}
 
     function loadSchedules(date) {
+    	console.log("선택된 영화:", selectedMovie);
+    	console.log("선택된 극장:", selectedTheater);
+    	console.log("선택된 날짜:", date);
     	  selectedDate = date;
     	  highlightSelected(dateList, date);
     	  
-    	  fetch(contextPath + "/booth/schedules?screen_date=" + date)
+    	  fetch(contextPath + "/booth/schedules?screen_date=" + date
+    			  + "&movie=" + encodeURIComponent(selectedMovie)
+    			  + "&theater=" + encodeURIComponent(selectedTheater))
     	    .then(response => response.json())
     	    .then(schedules => {
     	      timeList.innerHTML = "";
