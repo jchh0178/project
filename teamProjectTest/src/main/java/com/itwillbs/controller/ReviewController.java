@@ -44,9 +44,9 @@ public class ReviewController {
         }
         
         // ✅ 감정 분석 결과 통계
-//      Map<String, Integer> sentiment = reviewService.countSentimentByMovieId(movieId);
-//      model.addAttribute("positive", sentiment.getOrDefault("positive", 0));
-//      model.addAttribute("negative", sentiment.getOrDefault("negative", 0));
+      Map<String, Integer> sentiment = reviewService.countSentimentByMovieId(movieId);
+      model.addAttribute("positive", sentiment.getOrDefault("positive", 0));
+      model.addAttribute("negative", sentiment.getOrDefault("negative", 0));
 
    }
     
